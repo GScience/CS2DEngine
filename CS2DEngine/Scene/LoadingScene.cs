@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using CS2DEngine.Content;
 using CS2DEngine.Graphic;
 using CS2DEngine.Scene.Widget;
+using OpenTK.Graphics.ES20;
 using OpenTK.Input;
 
 namespace CS2DEngine.Scene
@@ -77,7 +78,8 @@ namespace CS2DEngine.Scene
         public override void OnLoad()
         {
             var image = AddWidget<ImageWidget>();
-            image.image = ContentManager.Load<Texture, ImageReader>("[CS2DEngine]CS2DEngine.Loading.png");
+            var text = AddWidget<TextWidget>();
+            image.image = ContentManager.Load<Texture, ImageReader>("[CS2DEngine]CS2DEngine.Image.Loading.png");
         }
 
         /// <summary>

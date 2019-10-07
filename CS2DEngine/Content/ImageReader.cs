@@ -14,7 +14,10 @@ namespace CS2DEngine.Content
         public object Load(Stream stream)
         {
             var image = Image.FromStream(stream);
-            return Texture.Create(image);
+            var texture = Texture.Create(image);
+            image.Dispose();
+
+            return texture;
         }
     }
 }

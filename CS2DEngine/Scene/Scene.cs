@@ -33,5 +33,9 @@ namespace CS2DEngine.Scene
         {
             OnUnloading();
         }
+
+        protected Scene() : base(null)
+        {
+        }
     }
 }

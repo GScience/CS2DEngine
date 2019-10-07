@@ -19,6 +19,7 @@ namespace CS2DEngine.Scene
             if (_currentScene?.SceneState == SceneState.Unloaded || _currentScene == null)
             {
                 _nextScene?.OnLoad();
+                _nextScene?.Refresh();
                 _currentScene = _nextScene;
             }
 

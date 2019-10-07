@@ -21,6 +21,7 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <AllowUnsafeBlocks>false</AllowUnsafeBlocks>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -29,6 +30,7 @@
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <AllowUnsafeBlocks>false</AllowUnsafeBlocks>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="OpenTK, Version=3.1.0.0, Culture=neutral, PublicKeyToken=bad199fe84eb3df4, processorArchitecture=MSIL">
@@ -49,10 +51,13 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Content\ContentManager.cs" />
+    <Compile Include="Content\FontFamilyReader.cs" />
     <Compile Include="Content\IContentReader.cs" />
     <Compile Include="Content\ImageReader.cs" />
     <Compile Include="Content\ShaderProgramReader.cs" />
+    <Compile Include="Graphic\TextRenderer.cs" />
     <Compile Include="Graphic\Texture.cs" />
+    <Compile Include="Graphic\VertexBuffer.cs" />
     <Compile Include="Logger.cs" />
     <Compile Include="Engine.cs" />
     <Compile Include="Graphic\ShaderProgram.cs" />
@@ -64,17 +69,21 @@
     <Compile Include="Scene\LoadingScene.cs" />
     <Compile Include="Scene\SceneState.cs" />
     <Compile Include="Scene\Widget\ImageWidget.cs" />
+    <Compile Include="Scene\Widget\TextWidget.cs" />
     <Compile Include="Scene\Widget\Widget.cs" />
     <Compile Include="Scene\Widget\WidgetContainer.cs" />
     <Compile Include="Time.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
+    <EmbeddedResource Include="Font\UI.ttf" />
     <None Include="OpenTK.dll.config" />
     <None Include="packages.config" />
+    <EmbeddedResource Include="Shader\UI.shader" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Loading.png" />
+    <EmbeddedResource Include="Image\Loading.png" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

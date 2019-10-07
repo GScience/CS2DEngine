@@ -8,20 +8,29 @@ namespace CS2DEngine.Scene.Widget
 {
     public class WidgetContainer : Widget
     {
-        public List<Widget> childList = new List<Widget>();
+        public List<Widget> children = new List<Widget>();
 
         public override void Draw()
         {
-            foreach (var child in childList)
+            foreach (var child in children)
                 child.Draw();
         }
 
-        protected T AddWidget<T>() where T : Widget, new()
+        protected T AddWidget<T>() where T : Widget
         {
-            var widget = new T();
-            widget.SetParent(this);
-            childList.Add(widget);
+            var widget = Create<T>(this);
+            children.Add(widget);
             return widget;
+        }
+
+        public override void Refresh()
+        {
+            foreach (var child in children)
+                child.Refresh();
+        }
+
+        public WidgetContainer(Widget parent) : base(parent)
+        {
         }
     }
 }

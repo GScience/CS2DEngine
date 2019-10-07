@@ -10,7 +10,7 @@ namespace CS2DEngine.Graphic
 {
     public class Texture
     {
-        private int _textureId;
+        private readonly int _textureId;
 
         private Texture(int textureId)
         {
@@ -25,14 +25,18 @@ namespace CS2DEngine.Graphic
             GL.BindTexture(TextureTarget.Texture2D, _textureId);
         }
 
-        public static Texture Create(Image image)
+        public static Texture Create(Image image, int x = 0, int y = 0, int width = 0, int height = 0)
         {
             //创建纹理
-            GL.GenTextures(1, out int textureId);
-            var err = GL.GetError();
+            var textureId = GL.GenTexture();
 
-            var bitmap = (Bitmap) image;
-            var rect = new Rectangle(0, 0, bitmap.Width, bitmap.Height);
+            if (width == 0)
+                width = image.Width;
+            if (height == 0)
+                height = image.Height;
+
+            var bitmap = ((Bitmap) image).Clone(new Rectangle(x,y,width, height), image.PixelFormat);
+            var rect = new Rectangle(0, 0, width, height);
 
             var bitmapData = bitmap.LockBits(
                 rect, 
@@ -67,9 +71,25 @@ namespace CS2DEngine.Graphic
                 bitmapData.Scan0);
 
             //设置纹理属性
-            GL.TexParameter(TextureTarget.Texture2D, TextureParameterName.TextureMinFilter, (int) TextureMinFilter.Linear); // 线形滤波
-            GL.TexParameter(TextureTarget.Texture2D, TextureParameterName.TextureMagFilter, (int) TextureMinFilter.Linear); // 线形滤波
+            GL.TexParameter(TextureTarget.Texture2D, TextureParameterName.TextureMinFilter, (int) TextureMinFilter.Nearest); // 线形滤波
+            GL.TexParameter(TextureTarget.Texture2D, TextureParameterName.TextureMagFilter, (int) TextureMinFilter.Nearest); // 线形滤波
+
+            bitmap.Dispose();
+
             return new Texture(textureId);
+        }
+
+        ~Texture()
+        {
+            Dispose();
+        }
+
+        public void Dispose()
+        {
+            if (!Engine.IsExiting)
+                GL.DeleteTexture(_textureId);
+
+            GC.SuppressFinalize(this);
         }
     }
 }

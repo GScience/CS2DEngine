@@ -10,31 +10,44 @@ namespace CS2DEngine.Scene.Widget
 {
     public class ImageWidget : Widget
     {
+        private readonly VertexArrayObj _vao = VertexArrayObj.Create();
+        private readonly VertexBuffer _buffer = VertexBuffer.Create(BufferTarget.ArrayBuffer);
+
+        private float[] BufferData =
+        {
+            -0.9f, -0.9f, 0.0f, 1.0f,
+            0.85f, -0.9f, 1.0f, 1.0f,
+            -0.9f, 0.85f, 0.0f, 0.0f,
+            0.9f, -0.85f, 1.0f, 1.0f,
+            0.9f, 0.9f, 1.0f, 0.0f,
+            -0.85f, 0.9f, 0.0f, 0.0f
+        };
+
         public Texture image;
+
+        public ImageWidget(Widget parent) : base(parent)
+        {
+            UIShader.Use();
+            _buffer.BufferData(BufferData);
+            _vao.SetAttribPointer(0, 2, VertexAttribPointerType.Float, false, 4 * sizeof(float), 0);
+            _vao.SetAttribPointer(1, 2, VertexAttribPointerType.Float, false, 4 * sizeof(float), 2 * sizeof(float));
+            _vao.SetVertexAttribArrayEnable(0);
+            _vao.SetVertexAttribArrayEnable(1);
+        }
+
+        public override void Refresh()
+        {
+            
+        }
 
         public override void Draw()
         {
             image.Bind();
 
-            GL.Begin(PrimitiveType.Quads);
+            _vao.Bind();
+            _buffer.Bind();
 
-            GL.TexCoord2(0.0f, 1.0f);
-            //GL.Color3(1.0f,0,0);
-            GL.Vertex3(-1.0f, -1.0f, 0.0f);
-
-            GL.TexCoord2(0.0f, 0.0f);
-            //GL.Color3(0, 1.0f, 0);
-            GL.Vertex3(-1.0f, 1.0f, 0.0f);
-
-            GL.TexCoord2(1.0f, 0.0f);
-            //GL.Color3(0, 0, 1.0f);
-            GL.Vertex3(1.0f, 1.0f, 0.0f);
-
-            GL.TexCoord2(1.0f, 1.0f);
-            //GL.Color3(0, 0, 1.0f);
-            GL.Vertex3(1.0f, -1.0f, 0.0f);
-
-            GL.End();
+            GL.DrawArrays(PrimitiveType.Triangles, 0, 6);
         }
     }
 }

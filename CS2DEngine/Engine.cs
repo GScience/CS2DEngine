@@ -18,10 +18,15 @@ namespace CS2DEngine
     /// </summary>
     public class Engine
     {
+        public static Engine instance;
+
+        public static bool IsExiting => instance._window.IsExiting;
+
         private GameWindow _window;
 
         private Engine()
         {
+            instance = this;
         }
 
         /// <summary>
@@ -43,16 +48,12 @@ namespace CS2DEngine
                     windowName,
                     isFullScene ? GameWindowFlags.Fullscreen : GameWindowFlags.FixedWindow,
                     DisplayDevice.Default, 
-                    2, 
-                    0, 
+                    3, 
+                    3, 
                     GraphicsContextFlags.Default, 
                     null, 
                     true)
             };
-
-            GL.Enable(EnableCap.Texture2D);
-            GL.ClearColor(Color.DeepSkyBlue);
-
             SceneManager.RegisterScene<LoadingScene>();
 
             engine.RegisterInitState(engine.Init, "Init Engine");
@@ -86,6 +87,7 @@ namespace CS2DEngine
 
             SceneManager.Draw();
 
+            GL.Flush();
             _window.SwapBuffers();
         }
 
@@ -110,12 +112,16 @@ namespace CS2DEngine
 
         public void Init()
         {
+            GL.ClearColor(Color.DeepSkyBlue);
+            GL.Enable(EnableCap.Blend);
+            GL.BlendFunc(BlendingFactor.One, BlendingFactor.OneMinusSrcAlpha);
             _window.RenderFrame += WindowOnRenderFrame;
         }
 
         public void Run()
         {
             SceneManager.SwitchToScene<LoadingScene>();
+
             _window.Run();
         }
     }
