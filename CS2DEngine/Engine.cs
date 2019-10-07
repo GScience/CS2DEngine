@@ -56,8 +56,8 @@ namespace CS2DEngine
             };
             SceneManager.RegisterScene<LoadingScene>();
 
-            engine.RegisterInitState(engine.Init, "Init Engine");
-            engine.RegisterInitState(ContentManager.Init, "Loading content");
+            engine.RegisterInitState(engine.Init, "EngineInternal.InitEngine");
+            engine.RegisterInitState(ContentManager.Init, "EngineInternal.LoadingContent");
 
             engine._window.UpdateFrame += engine.WindowOnUpdateFrame;
             
@@ -96,7 +96,7 @@ namespace CS2DEngine
         /// </summary>
         /// <param name="func"></param>
         /// <param name="state"></param>
-        public void RegisterInitState(Action func, string state)
+        public void RegisterInitState(Action func, LocalizedString state)
         {
             SceneManager.GetScene<LoadingScene>().AddLoadingState(new LoadingScene.InitState(func, state));
         }
@@ -114,7 +114,9 @@ namespace CS2DEngine
         {
             GL.ClearColor(Color.DeepSkyBlue);
             GL.Enable(EnableCap.Blend);
+            GL.Enable(EnableCap.DepthTest);
             GL.BlendFunc(BlendingFactor.One, BlendingFactor.OneMinusSrcAlpha);
+
             _window.RenderFrame += WindowOnRenderFrame;
         }
 

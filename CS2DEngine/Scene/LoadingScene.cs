@@ -18,14 +18,14 @@ namespace CS2DEngine.Scene
         /// </summary>
         internal struct InitState
         {
-            public InitState(Action func, string state)
+            public InitState(Action func, LocalizedString state)
             {
                 this.func = func;
                 this.state = state;
             }
 
             public Action func;
-            public string state;
+            public LocalizedString state;
         }
 
         /// <summary>
@@ -80,6 +80,7 @@ namespace CS2DEngine.Scene
             var image = AddWidget<ImageWidget>();
             var text = AddWidget<TextWidget>();
             image.image = ContentManager.Load<Texture, ImageReader>("[CS2DEngine]CS2DEngine.Image.Loading.png");
+            ContentManager.Load<object, LangFileReader>("[CS2DEngine]CS2DEngine.Lang.EngineInternal.lang");
         }
 
         /// <summary>

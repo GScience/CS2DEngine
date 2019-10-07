@@ -84,6 +84,11 @@ namespace CS2DEngine.Graphic
             Dispose();
         }
 
+        public static void Unbind()
+        {
+            GL.BindTexture(TextureTarget.Texture2D, 0);
+        }
+
         public void Dispose()
         {
             if (!Engine.IsExiting)

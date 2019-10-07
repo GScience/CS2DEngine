@@ -4,6 +4,7 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using OpenTK;
 using OpenTK.Graphics.OpenGL;
 
 namespace CS2DEngine.Graphic
@@ -11,6 +12,7 @@ namespace CS2DEngine.Graphic
     public class ShaderProgram
     {
         private readonly int _programId;
+        private Dictionary<string, int> _uniformLocDictionary = new Dictionary<string, int>();
 
         private ShaderProgram(int programId)
         {
@@ -31,6 +33,17 @@ namespace CS2DEngine.Graphic
         public int GetProgramId()
         {
             return _programId;
+        }
+
+        public void SetUniform4(string name, Vector4 vec)
+        {
+            if (!_uniformLocDictionary.TryGetValue(name, out var value))
+            {
+                value = GL.GetUniformLocation(_programId, name);
+                _uniformLocDictionary[name] = value;
+            }
+
+            GL.Uniform4(value, vec);
         }
     }
 }

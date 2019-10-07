@@ -54,10 +54,14 @@
     <Compile Include="Content\FontFamilyReader.cs" />
     <Compile Include="Content\IContentReader.cs" />
     <Compile Include="Content\ImageReader.cs" />
+    <Compile Include="Content\LangFileReader.cs" />
     <Compile Include="Content\ShaderProgramReader.cs" />
-    <Compile Include="Graphic\TextRenderer.cs" />
+    <Compile Include="Graphic\Text\TextRenderer.cs" />
     <Compile Include="Graphic\Texture.cs" />
+    <Compile Include="Graphic\Text\CharGraph.cs" />
     <Compile Include="Graphic\VertexBuffer.cs" />
+    <Compile Include="Localization.cs" />
+    <Compile Include="LocalizedString.cs" />
     <Compile Include="Logger.cs" />
     <Compile Include="Engine.cs" />
     <Compile Include="Graphic\ShaderProgram.cs" />
@@ -77,6 +81,7 @@
   <ItemGroup>
     <None Include="app.config" />
     <EmbeddedResource Include="Font\UI.ttf" />
+    <EmbeddedResource Include="Lang\EngineInternal.lang" />
     <None Include="OpenTK.dll.config" />
     <None Include="packages.config" />
     <EmbeddedResource Include="Shader\UI.shader" />

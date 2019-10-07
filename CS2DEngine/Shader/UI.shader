@@ -17,12 +17,15 @@ VertexShader
 FragmentShader
 {
 	uniform sampler2D tex;
+	uniform vec4 color;
 
 	out vec4 fColor;
+
 	in vec2 texCoord;
 
 	void main()
 	{
 		fColor = texture(tex, texCoord);
+		fColor *= color;
 	}
 }
