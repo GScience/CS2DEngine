@@ -41,7 +41,7 @@ namespace CS2DEngine.Scene.Widget
 
         public override void Refresh()
         {
-            ZOrder = 0.2f;
+            ZOrder = 0.9f;
         }
 
         public override void Draw()

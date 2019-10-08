@@ -8,14 +8,14 @@ namespace CS2DEngine.Graphic.Text
 {
     public class CharGraph
     {
-        public readonly int x;
-        public readonly int y;
-        public readonly int width;
-        public readonly int height;
+        public readonly float x;
+        public readonly float y;
+        public readonly float width;
+        public readonly float height;
 
         public Texture texture;
 
-        public CharGraph(int x, int y, int width, int height, Texture texture)
+        public CharGraph(float x, float y, float width, float height, Texture texture)
         {
             this.x = x;
             this.y = y;

@@ -87,6 +87,7 @@
     <None Include="OpenTK.dll.config" />
     <None Include="packages.config" />
     <EmbeddedResource Include="Shader\UI.shader" />
+    <EmbeddedResource Include="Shader\Text.shader" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Image\Loading.png" />

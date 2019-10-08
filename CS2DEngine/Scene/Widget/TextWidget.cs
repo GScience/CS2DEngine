@@ -9,7 +9,7 @@ using CS2DEngine.Graphic.Text;
 
 namespace CS2DEngine.Scene.Widget
 {
-    public class TextWidget : ImageWidget
+    public class TextWidget : Widget
     {
         public float fontSize = 100;
         public TextRenderer textRenderer;
@@ -19,16 +19,14 @@ namespace CS2DEngine.Scene.Widget
 
         }
 
+        public override void Draw()
+        {
+            textRenderer.DrawText("EngineInternal.InitEngine", 0, 0, 1, 1, Color.Red);
+        }
+
         public override void Refresh()
         {
             textRenderer.RefreshCharGraphs();
-
-            var charGraph = textRenderer.GetCharGraph('a');
-
-            ZOrder = 0.1f;
-            Color = Color.Red;
-
-            Image = charGraph.texture;
         }
     }
 }
