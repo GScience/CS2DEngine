@@ -6,30 +6,42 @@ using System.Threading.Tasks;
 
 namespace CS2DEngine
 {
+    using StrDictionary = Dictionary<string, string>;
+
     public static class Localization
     {
-        private static readonly Dictionary<string, string> Dictionary = new Dictionary<string, string>();
+        private static readonly Dictionary<string, StrDictionary> Dictionary = new Dictionary<string, StrDictionary>();
 
-        public static string Name => System.Globalization.CultureInfo.CurrentCulture.Name;
+        public static string LangName => System.Globalization.CultureInfo.CurrentCulture.Name;
 
-        public static void Add(string key, string name, string value)
+        public static void Add(string key, string langName, string value)
         {
-            Dictionary[name.ToLower() + "." + key] = value;
+            var langKey = langName.ToLower();
+
+            if (!Dictionary.ContainsKey(langKey))
+                Dictionary[langKey] = new StrDictionary();
+
+            Dictionary[langKey][key] = value;
         }
 
-        public static string Get(string key, string name = "")
+        public static string Get(string key, string langName = "")
         {
-            if (name == "")
-                name = Name;
+            if (langName == "")
+                langName = LangName;
 
-            var dictKey = Name.ToLower() + "." + key;
+            langName = langName.ToLower();
 
-            return Dictionary.TryGetValue(dictKey, out var value) ? value : dictKey;
+            if (!Dictionary.TryGetValue(langName, out var strDict))
+                strDict = Dictionary.Values.First();
+
+            return strDict.TryGetValue(key, out var value) ? value : key;
         }
 
         public static string[] GetValueArray()
         {
-            return Dictionary.Values.ToArray();
+            var strList = Dictionary.SelectMany(strDict => strDict.Value.Values).ToList();
+
+            return strList.ToArray();
         }
     }
 }

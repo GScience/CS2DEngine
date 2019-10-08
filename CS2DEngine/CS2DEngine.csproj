@@ -51,11 +51,12 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Content\ContentManager.cs" />
-    <Compile Include="Content\FontFamilyReader.cs" />
+    <Compile Include="Content\TextRendererReader.cs" />
     <Compile Include="Content\IContentReader.cs" />
     <Compile Include="Content\ImageReader.cs" />
     <Compile Include="Content\LangFileReader.cs" />
     <Compile Include="Content\ShaderProgramReader.cs" />
+    <Compile Include="Graphic\UISpriteRenderer.cs" />
     <Compile Include="Graphic\Text\TextRenderer.cs" />
     <Compile Include="Graphic\Texture.cs" />
     <Compile Include="Graphic\Text\CharGraph.cs" />
@@ -80,14 +81,18 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
-    <EmbeddedResource Include="Font\UI.ttf" />
-    <EmbeddedResource Include="Lang\EngineInternal.lang" />
+    <EmbeddedResource Include="Font\UI.20.ttf" />
+    <EmbeddedResource Include="Lang\EngineInternal.zh_cn.lang" />
+    <EmbeddedResource Include="Lang\EngineInternal.en_us.lang" />
     <None Include="OpenTK.dll.config" />
     <None Include="packages.config" />
     <EmbeddedResource Include="Shader\UI.shader" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Image\Loading.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="ReadMe.txt" />
   </ItemGroup>
   <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

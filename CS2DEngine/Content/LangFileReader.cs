@@ -9,28 +9,11 @@ namespace CS2DEngine.Content
 {
     internal class LangFileReader : IContentReader
     {
-        public object Load(Stream stream)
+        public object Load(Stream stream, string key)
         {
             var reader = new StreamReader(stream);
-            int buffer;
-            var nameBuffer = "";
-
-            while ((buffer = reader.Read()) != -1)
-            {
-                if (buffer == '[')
-                    continue;
-
-                if (buffer == ']')
-                {
-                    ReadLang(reader, nameBuffer);
-                    nameBuffer = "";
-                }
-                else if (char.IsControl((char) buffer) || buffer == ' ')
-                    continue;
-                else
-                    nameBuffer += (char)buffer;
-            }
-
+            var keys = key.Split('.');
+            ReadLang(reader, keys[keys.Length - 3] + "-" +keys[keys.Length - 2]);
             return null;
         }
 
@@ -41,9 +24,6 @@ namespace CS2DEngine.Content
 
             while ((buffer = reader.Read()) != -1)
             {
-                if (buffer == '[')
-                    break;
-                
                 if (buffer == '=')
                 {
                     var value = reader.ReadLine()?.TrimStart();

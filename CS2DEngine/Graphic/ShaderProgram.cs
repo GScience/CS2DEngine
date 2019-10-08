@@ -45,5 +45,16 @@ namespace CS2DEngine.Graphic
 
             GL.Uniform4(value, vec);
         }
+
+        public void SetUniformMatrix4(string name, Matrix4 matrix)
+        {
+            if (!_uniformLocDictionary.TryGetValue(name, out var value))
+            {
+                value = GL.GetUniformLocation(_programId, name);
+                _uniformLocDictionary[name] = value;
+            }
+
+            GL.UniformMatrix4(value, true, ref matrix);
+        }
     }
 }

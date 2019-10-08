@@ -54,7 +54,7 @@ namespace CS2DEngine.Content
         public static T Load<T, T2>(string key)
         {
             var reader = ReaderDictionary[typeof(T2)];
-            var obj = reader.Load(GetStreamFromKey(key));
+            var obj = reader.Load(GetStreamFromKey(key), key);
 
             ContentDictionary[key] = obj;
 

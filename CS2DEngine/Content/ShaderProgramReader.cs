@@ -11,7 +11,7 @@ namespace CS2DEngine.Content
 {
     internal class ShaderProgramReader : IContentReader
     {
-        public object Load(Stream stream)
+        public object Load(Stream stream, string key)
         {
             var reader = new StreamReader(stream);
             var shaderProgram = ShaderProgram.Create();

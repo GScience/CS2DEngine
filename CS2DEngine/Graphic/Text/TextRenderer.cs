@@ -11,12 +11,20 @@ namespace CS2DEngine.Graphic.Text
 {
     public class TextRenderer
     {
-        private static readonly Bitmap ImageBuffer = new Bitmap(1024, 1024);
+        private static readonly Bitmap ImageBuffer;
+
+        private readonly Dictionary<char, CharGraph> _charGraphDictionary = new Dictionary<char, CharGraph>();
 
         public readonly FontFamily fontFamily;
         public readonly float fontSize;
 
         public readonly Font font;
+
+        static TextRenderer()
+        {
+            var windowSize = Engine.WindowSize;
+            ImageBuffer = new Bitmap(windowSize.Width, windowSize.Height);
+        }
 
         public TextRenderer(FontFamily fontFamily, float fontSize)
         {
@@ -25,19 +33,27 @@ namespace CS2DEngine.Graphic.Text
             font = new Font(fontFamily, this.fontSize);
         }
 
-        public CharGraph[] AutoCreateCharGraphs()
+        public void RefreshCharGraphs()
         {
             var charList = new List<char>();
 
             foreach (var value in Localization.GetValueArray())
             foreach (var c in value)
-                if (!charList.Contains(c))
+                if (!charList.Contains(c) && !_charGraphDictionary.ContainsKey(c))
                     charList.Add(c);
 
-            return CreateCharGraphs(charList.ToArray());
+            var charGraphs = CreateCharGraphs(charList.ToArray());
+
+            for (var i = 0; i < charGraphs.Length; ++i)
+                _charGraphDictionary[charList[i]] = charGraphs[i];
         }
 
-        public CharGraph[] CreateCharGraphs(char[] chars)
+        public CharGraph GetCharGraph(char c)
+        {
+            return _charGraphDictionary.TryGetValue(c, out var value) ? value : null;
+        }
+
+        private CharGraph[] CreateCharGraphs(char[] chars)
         {
             var graphList = new List<CharGraph>(chars.Length);
             var graphics = Graphics.FromImage(ImageBuffer);
@@ -64,7 +80,7 @@ namespace CS2DEngine.Graphic.Text
 
                 if (drawingOffset.Y + charHeight > ImageBuffer.Height)
                 {
-                    BindTextureToNewCharGraph(graphList, GenTexture());
+                    BindTextureToNewCharGraph(graphList, GenTextureFromBuffer());
                     graphics.Clear(Color.FromArgb(0, 255, 255, 255));
                     drawingOffset = Vector2.Zero;
                 }
@@ -84,14 +100,14 @@ namespace CS2DEngine.Graphic.Text
                 lineMaxHeight = Math.Max(lineMaxHeight, charHeight);
             }
 
-            BindTextureToNewCharGraph(graphList, GenTexture());
+            BindTextureToNewCharGraph(graphList, GenTextureFromBuffer());
 
             graphics.Dispose();
 
             return graphList.ToArray();
         }
 
-        private Texture GenTexture()
+        private Texture GenTextureFromBuffer()
         {
             var texture = Texture.Create(
                 ImageBuffer,
@@ -106,7 +122,11 @@ namespace CS2DEngine.Graphic.Text
         private void BindTextureToNewCharGraph(List<CharGraph> list, Texture texture)
         {
             for (var i = list.Count - 1; i >= 0; --i)
+            {
+                if (list[i].texture != null)
+                    break;
                 list[i].texture = texture;
+            }
         }
     }
 }

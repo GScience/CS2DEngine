@@ -7,6 +7,7 @@ using System.Text;
 using System.Threading.Tasks;
 using CS2DEngine.Content;
 using CS2DEngine.Graphic;
+using CS2DEngine.Graphic.Text;
 using OpenTK;
 
 namespace CS2DEngine.Scene.Widget
@@ -30,12 +31,6 @@ namespace CS2DEngine.Scene.Widget
 
     public abstract class Widget
     {
-        public static ShaderProgram UIShader { get; }
-            = ContentManager.Load<ShaderProgram, ShaderProgramReader>("[CS2DEngine]CS2DEngine.Shader.UI.shader");
-
-        public static FontFamily UIFont { get; }
-            = ContentManager.Load<FontFamily, FontFamilyReader>("[CS2DEngine]CS2DEngine.Font.UI.ttf");
-
         protected Widget(Widget parent)
         {
             this.parent = parent;
@@ -54,7 +49,7 @@ namespace CS2DEngine.Scene.Widget
         {
             var type = typeof(T);
             var cons = type.GetConstructor(new[] {typeof(Widget)});
-            return (T) cons?.Invoke(new[] {parent});
+            return (T) cons?.Invoke(new object[] {parent});
         }
     }
 }

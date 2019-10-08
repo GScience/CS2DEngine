@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using CS2DEngine.Content;
 using CS2DEngine.Graphic;
+using CS2DEngine.Graphic.Text;
 using CS2DEngine.Scene.Widget;
 using OpenTK.Graphics.ES20;
 using OpenTK.Input;
@@ -79,8 +80,10 @@ namespace CS2DEngine.Scene
         {
             var image = AddWidget<ImageWidget>();
             var text = AddWidget<TextWidget>();
-            image.image = ContentManager.Load<Texture, ImageReader>("[CS2DEngine]CS2DEngine.Image.Loading.png");
-            ContentManager.Load<object, LangFileReader>("[CS2DEngine]CS2DEngine.Lang.EngineInternal.lang");
+            text.textRenderer = ContentManager.Load<TextRenderer, TextRendererReader>("[CS2DEngine]CS2DEngine.Font.UI.20.ttf");
+            image.Image = ContentManager.Load<Texture, ImageReader>("[CS2DEngine]CS2DEngine.Image.Loading.png");
+            ContentManager.Load<object, LangFileReader>("[CS2DEngine]CS2DEngine.Lang.EngineInternal.en_us.lang");
+            ContentManager.Load<object, LangFileReader>("[CS2DEngine]CS2DEngine.Lang.EngineInternal.zh_cn.lang");
         }
 
         /// <summary>

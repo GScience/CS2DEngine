@@ -21,6 +21,7 @@ namespace CS2DEngine
         public static Engine instance;
 
         public static bool IsExiting => instance._window.IsExiting;
+        public static Size WindowSize => instance._window.Size;
 
         private GameWindow _window;
 

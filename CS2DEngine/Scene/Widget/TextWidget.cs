@@ -11,10 +11,8 @@ namespace CS2DEngine.Scene.Widget
 {
     public class TextWidget : ImageWidget
     {
-        private TextRenderer _textRenderer;
-        private CharGraph[] charGraphArray;
-
         public float fontSize = 100;
+        public TextRenderer textRenderer;
 
         public TextWidget(Widget parent) : base(parent)
         {
@@ -23,15 +21,14 @@ namespace CS2DEngine.Scene.Widget
 
         public override void Refresh()
         {
-            _textRenderer = new TextRenderer(UIFont, fontSize);
-            charGraphArray = _textRenderer.AutoCreateCharGraphs();
+            textRenderer.RefreshCharGraphs();
 
-            zOrder = 0.1f;
+            var charGraph = textRenderer.GetCharGraph('a');
 
-            base.Refresh();
-            color = Color.Red;
+            ZOrder = 0.1f;
+            Color = Color.Red;
 
-            image = charGraphArray[0].texture;
+            Image = charGraph.texture;
         }
     }
 }

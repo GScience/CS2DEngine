@@ -12,6 +12,6 @@ namespace CS2DEngine.Content
     /// </summary>
     public interface IContentReader
     {
-        object Load(Stream stream);
+        object Load(Stream stream, string key);
     }
 }
